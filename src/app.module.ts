@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-
 import databaseConfig from './config/database.config';
 import appConfig from './config/app.config';
 import { validationSchema } from './config/validation.schema';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ItemsModule } from './modules/items/items.module';
 
 @Module({
   imports: [
@@ -16,19 +13,20 @@ import { AppService } from './app.service';
       load: [databaseConfig, appConfig],
       validationSchema,
       validationOptions: {
+        allowUnknown: false,
         abortEarly: true,
       },
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('database.uri'),
-        ...configService.get('database.options'),
-      }),
       inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('database.uri') as string,
+      }),
     }),
+    ItemsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
