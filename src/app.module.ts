@@ -5,6 +5,7 @@ import databaseConfig from './config/database.config';
 import appConfig from './config/app.config';
 import { validationSchema } from './config/validation.schema';
 import { ItemsModule } from './modules/items/items.module';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ItemsModule } from './modules/items/items.module';
       }),
     }),
     ItemsModule,
+    CartModule,
   ],
   controllers: [],
   providers: [],
