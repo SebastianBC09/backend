@@ -1,31 +1,23 @@
-import { z } from 'zod';
+import * as Joi from 'joi';
 
-export const validationSchema = z.object({
+export const validationSchema = Joi.object({
   // Application
-  NODE_ENV: z
-    .enum(['development', 'production', 'test'])
+  NODE_ENV: Joi.string()
+    .valid('development', 'production', 'test')
     .default('development'),
-
-  PORT: z
-    .string()
-    .default('3001')
-    .transform((val) => parseInt(val, 10))
-    .pipe(z.number().min(1).max(65535)),
-
-  API_PREFIX: z.string().default('api/v1'),
+  PORT: Joi.number().port().default(3001),
+  API_PREFIX: Joi.string().default('api/v1'),
 
   // Database
-  MONGODB_URI: z.string().min(1, 'MONGODB_URI is required'),
-  MONGODB_URI_TEST: z.string().optional(),
+  MONGODB_URI: Joi.string().required().messages({
+    'string.empty': 'MONGODB_URI is required',
+    'any.required': 'MONGODB_URI must be provided',
+  }),
+  MONGODB_URI_TEST: Joi.string().optional(),
 
   // CORS
-  CORS_ORIGIN: z.string().default('http://localhost:3000'),
+  CORS_ORIGIN: Joi.string().default('http://localhost:3000'),
 
   // Swagger
-  SWAGGER_ENABLED: z
-    .string()
-    .default('true')
-    .transform((val) => val === 'true'),
-});
-
-export type EnvironmentVariables = z.infer<typeof validationSchema>;
+  SWAGGER_ENABLED: Joi.string().valid('true', 'false').default('true'),
+}).unknown(true);
