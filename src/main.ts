@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import session from 'express-session';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -13,16 +14,27 @@ async function bootstrap() {
   const corsOrigin = configService.get<string>('app.corsOrigin') || '*';
   const swaggerEnabled = configService.get<boolean>('app.swagger.enabled');
 
-  // Enable CORS
   app.enableCors({
     origin: corsOrigin,
     credentials: true,
   });
 
-  // Set global prefix
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || 'shopping-cart-secret-key',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+      },
+    }),
+  );
+
   app.setGlobalPrefix(apiPrefix);
 
-  // Enable validation
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -31,7 +43,6 @@ async function bootstrap() {
     }),
   );
 
-  // Setup Swagger
   if (swaggerEnabled) {
     const config = new DocumentBuilder()
       .setTitle('Shopping Cart API')
@@ -45,7 +56,6 @@ async function bootstrap() {
     SwaggerModule.setup('api/docs', app, document);
   }
 
-  // ⭐ ONLY ONE app.listen() call
   await app.listen(port, '0.0.0.0');
 
   console.log(`
