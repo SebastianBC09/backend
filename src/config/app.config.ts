@@ -8,7 +8,7 @@ export default registerAs('app', () => ({
   swagger: {
     enabled: process.env.SWAGGER_ENABLED === 'true',
     title: 'Shopping Cart API',
-    description: 'RESTful API for shopping cart management',
+    description: 'RESTFul API for shopping cart management',
     version: '1.0',
     path: 'api/docs',
   },
