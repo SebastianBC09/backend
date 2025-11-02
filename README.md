@@ -113,18 +113,18 @@ src/
 
 ```mermaid
 flowchart TB
-    subgraph External["🌐 Clients"]
+    subgraph External["🌐 CLIENTS"]
         UI[Web UI / Postman]
         SWAGGER[Swagger UI]
     end
 
-    subgraph Presentation["🎯 Presentation Layer"]
-        ItemsCtrl[ItemsController<br/>GET /items<br/>GET /items/:id]
-        CartCtrl[CartController<br/>POST /cart/items<br/>PATCH /cart/items/:id<br/>DELETE /cart/items/:id<br/>GET /cart]
+    subgraph Presentation["🎯 PRESENTATION LAYER"]
+        ItemsCtrl["<b>ItemsController</b><br/>GET /items<br/>GET /items/:id"]
+        CartCtrl["<b>CartController</b><br/>POST /cart/items<br/>PATCH /cart/items/:id<br/>DELETE /cart/items/:id<br/>GET /cart"]
         DTOs[DTOs<br/>Validation & Transformation]
     end
 
-    subgraph Application["⚙️ Application Layer"]
+    subgraph Application["⚙️ APPLICATION LAYER"]
         ItemsService[ItemsService]
         CartService[CartService]
 
@@ -142,7 +142,7 @@ flowchart TB
         end
     end
 
-    subgraph Domain["🛠️ Domain Layer"]
+    subgraph Domain["🛠️ DOMAIN LAYER"]
         subgraph ItemsDomain["Items Domain"]
             ItemEntity[Item Entity<br/>Product & Event]
             ItemType[ItemType Enum]
@@ -155,15 +155,15 @@ flowchart TB
         end
     end
 
-    subgraph Infrastructure["🔧 Infrastructure Layer"]
+    subgraph Infrastructure["🔧 INFRASTRUCTURE LAYER"]
         ItemRepo[ItemRepository<br/>MongoDB Access]
         CartRepo[CartRepository<br/>MongoDB Access]
-        ItemSchema[(Items Collection)]
-        CartSchema[(Carts Collection)]
+        ItemSchema[("Items<br/>Collection")]
+        CartSchema[("Carts<br/>Collection")]
     end
 
-    subgraph Database["🗄️ MongoDB"]
-        DB[(shopping_cart database)]
+    subgraph Database["🗄️ MONGODB"]
+        DB[("shopping_cart<br/>database")]
     end
 
     %% Client connections
@@ -220,13 +220,13 @@ flowchart TB
     ItemSchema --> DB
     CartSchema --> DB
 
-    %% Styling
-    classDef presentation fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    classDef application fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
-    classDef domain fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef infrastructure fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    classDef external fill:#f1f8e9,stroke:#689f38,stroke-width:2px
-    classDef database fill:#e0f2f1,stroke:#00796b,stroke-width:2px
+    %% Enhanced Styling with Better Contrast
+    classDef presentation fill:#ff9800,stroke:#e65100,stroke-width:3px,color:#000
+    classDef application fill:#66bb6a,stroke:#1b5e20,stroke-width:3px,color:#000
+    classDef domain fill:#ab47bc,stroke:#4a148c,stroke-width:3px,color:#fff
+    classDef infrastructure fill:#ec407a,stroke:#880e4f,stroke-width:3px,color:#fff
+    classDef external fill:#9ccc65,stroke:#33691e,stroke-width:3px,color:#000
+    classDef database fill:#26a69a,stroke:#004d40,stroke-width:3px,color:#fff
 
     class ItemsCtrl,CartCtrl,DTOs presentation
     class ItemsService,CartService,ItemsUseCases,CartUseCases,GetItems,GetItemById,CheckStock,AddToCart,UpdateQty,RemoveItem,GetCart application
@@ -499,7 +499,7 @@ sequenceDiagram
 1. **Clone the repository:**
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/SebastianBC09/backend
 cd backend
 ```
 
@@ -801,24 +801,6 @@ The Swagger UI provides:
 
 ---
 
-## 🧪 Testing
-
-```bash
-# Run unit tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run tests with coverage
-npm run test:cov
-
-# Run e2e tests
-npm run test:e2e
-```
-
----
-
 ## 📦 Project Scripts
 
 ```bash
@@ -836,55 +818,22 @@ npm run seed           # Populate database with test data
 # Code Quality
 npm run lint           # Lint code
 npm run format         # Format code with Prettier
-
-# Testing
-npm test               # Run tests
-npm run test:cov       # Test coverage
-npm run test:e2e       # End-to-end tests
 ```
 
 ---
 
-## 🎓 Learning Resources
+## 👨‍💻 Autor
 
-This project demonstrates:
+**Sebastian Ballen C** - _FullStack Developer_
 
-- ✅ Clean Architecture implementation in NestJS
-- ✅ Domain-Driven Design principles
-- ✅ Layered architecture pattern
-- ✅ MongoDB with Mongoose ODM
-- ✅ Session management
-- ✅ Input validation and transformation
-- ✅ Error handling strategies
-- ✅ API documentation with Swagger
-
----
-
-## 👨‍💻 Author
-
-**Your Name** - _Fullstack Developer_
-
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
-- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Sebastian B.](https://www.linkedin.com/in/sebastianballencastaneda-softwaredeveloper)
+- Email: sebastian.ballenc@gmail.com
 
 ---
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-Built as part of a technical assessment demonstrating:
-
-- Modern backend architecture
-- Clean code principles
-- RESTful API design
-- MongoDB/Mongoose proficiency
-- NestJS framework mastery
 
 ---
 
